@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // mark as entity to create a table in sql with these fields
 @Entity
 // optional adding a custom table name , by default it keeps name as class name
@@ -22,22 +25,30 @@ public class User {
     private String strLastName;
 
     @Column(name = "gmail")
-    private String strEmailId;
+    private String gmail;
 
     @Column(name = "password")
     private String strPassword;
+
+    private List<Integer> followers = new ArrayList<>();
+
+    private List<Integer> following = new ArrayList<>();;
+
+    private String gender;
 
     public User(){
 
     }
 
-    public User(String strFirstName, Integer iUserId, String strLastName, String strEmailId, String strPassword) {
-        super();
-        this.strFirstName = strFirstName;
+    public User(Integer iUserId, String strFirstName, String strLastName, String gmail, String strPassword, List<Integer> followers, List<Integer> following, String gender) {
         this.iUserId = iUserId;
+        this.strFirstName = strFirstName;
         this.strLastName = strLastName;
-        this.strEmailId = strEmailId;
+        this.gmail = gmail;
         this.strPassword = strPassword;
+        this.followers = followers;
+        this.following = following;
+        this.gender = gender;
     }
 
     public Integer getiUserId() {
@@ -64,19 +75,43 @@ public class User {
         this.strLastName = strLastName;
     }
 
-    public String getStrEmailId() {
-        return strEmailId;
-    }
-
-    public void setStrEmailId(String strEmailId) {
-        this.strEmailId = strEmailId;
-    }
-
     public String getStrPassword() {
         return strPassword;
     }
 
     public void setStrPassword(String strPassword) {
         this.strPassword = strPassword;
+    }
+
+    public String getGmail() {
+        return gmail;
+    }
+
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
+    }
+
+    public List<Integer> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<Integer> followers) {
+        this.followers = followers;
+    }
+
+    public List<Integer> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<Integer> following) {
+        this.following = following;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
