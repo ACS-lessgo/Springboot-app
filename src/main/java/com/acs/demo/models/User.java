@@ -1,9 +1,6 @@
 package com.acs.demo.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ public class User {
 
     // to maintain unique identifier for each entry
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer iUserId;
     // give custom column name
     @Column(name = "first_name")
@@ -32,15 +30,17 @@ public class User {
 
     private List<Integer> followers = new ArrayList<>();
 
-    private List<Integer> following = new ArrayList<>();;
+    private List<Integer> following = new ArrayList<>();
 
     private String gender;
+
+    private List<Post> savedPosts = new ArrayList<>();
 
     public User(){
 
     }
 
-    public User(Integer iUserId, String strFirstName, String strLastName, String gmail, String strPassword, List<Integer> followers, List<Integer> following, String gender) {
+    public User(Integer iUserId, String strFirstName, String strLastName, String gmail, String strPassword, List<Integer> followers, List<Integer> following, String gender,List<Post> savedPosts) {
         this.iUserId = iUserId;
         this.strFirstName = strFirstName;
         this.strLastName = strLastName;
@@ -49,6 +49,7 @@ public class User {
         this.followers = followers;
         this.following = following;
         this.gender = gender;
+        this.savedPosts = savedPosts;
     }
 
     public Integer getiUserId() {
@@ -113,5 +114,13 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public List<Post> getSavedPosts() {
+        return savedPosts;
+    }
+
+    public void setSavedPosts(List<Post> savedPosts) {
+        this.savedPosts = savedPosts;
     }
 }
