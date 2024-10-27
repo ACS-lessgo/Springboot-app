@@ -21,12 +21,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("users/createUser")
-    // Request body sent on post
-    public User createUser(@RequestBody User user) {
-        return userService.registerUser(user);
-    }
-
     @GetMapping("/api/users")
     public List<User> getUsers(){
         return userRepository.findAll();
