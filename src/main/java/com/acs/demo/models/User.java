@@ -34,6 +34,8 @@ public class User {
 
     private String gender;
 
+    // all users can save all posts
+    @ManyToMany
     private List<Post> savedPosts = new ArrayList<>();
 
     public User(){

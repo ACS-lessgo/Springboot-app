@@ -1,9 +1,7 @@
 package com.acs.demo.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,10 +25,21 @@ public class Post {
 
     private String videoUrl;
 
+    // Rel mapping for user to post
+    // user creates many posts so rel mapping as many to one
+    // user has multiple posts
+
+    @JsonIgnore
+    @ManyToOne
     private User user;
 
     private LocalDateTime createdAt;
 
+    // user can like only once
+    // one post can have many likes from many users
+    // mapping as one to many
+
+    @OneToMany
     private List<User> likes = new ArrayList<>();
 
     public Post(Integer id, String caption, String imageUrl, String videoUrl, User user, LocalDateTime createdAt, List<User> likes) {

@@ -34,6 +34,7 @@ public class PostServiceImplementation implements PostService{
         newPost.setVideoUrl(post.getVideoUrl());
         newPost.setCreatedAt(LocalDateTime.now());
 
+        postRepository.save(newPost);
         return newPost;
     }
 
