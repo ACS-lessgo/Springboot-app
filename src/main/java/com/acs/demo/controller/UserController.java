@@ -27,7 +27,7 @@ public class UserController {
         return userService.registerUser(user);
     }
 
-    @GetMapping("/users")
+    @GetMapping("/api/users")
     public List<User> getUsers(){
         return userRepository.findAll();
     }
