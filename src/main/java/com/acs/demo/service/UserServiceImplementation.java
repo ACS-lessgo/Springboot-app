@@ -1,8 +1,10 @@
 package com.acs.demo.service;
 
+import com.acs.demo.config.provideJWT;
 import com.acs.demo.models.User;
 import com.acs.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,9 @@ public class UserServiceImplementation implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User registerUser(User user) {
@@ -76,7 +81,7 @@ public class UserServiceImplementation implements UserService{
         if(user.getStrFirstName() != null) modifiedUser.setStrFirstName(user.getStrFirstName());
         if(user.getStrLastName() != null) modifiedUser.setStrLastName(user.getStrLastName());
         if(user.getGmail() != null) modifiedUser.setGmail(user.getGmail());
-        if(user.getStrPassword() != null) modifiedUser.setStrPassword(user.getStrPassword());
+        if(user.getStrPassword() != null) modifiedUser.setStrPassword(passwordEncoder.encode(user.getStrPassword()));
         if(user.getGender() != null) modifiedUser.setGender(user.getGender());
 
         userRepository.save(modifiedUser);
@@ -98,5 +103,12 @@ public class UserServiceImplementation implements UserService{
         }else{
             throw new NoSuchElementException("User with ID: " + userId + " doesn't exist.");
         }
+    }
+
+    @Override
+    public User getUserByJWT(String jwtToken) {
+        String email = provideJWT.getEmailFromJwtToken(jwtToken);
+
+        return userRepository.findByGmail(email);
     }
 }

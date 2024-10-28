@@ -33,9 +33,12 @@ public class UserController {
             return userService.findUserById(userId);
     }
 
-    @PutMapping("users/modifyUser/{userId}")
-    public User updateUserDetails(@RequestBody User user,@PathVariable("userId") Integer userId ) throws Exception {
-        return userService.updateUser(user,userId);
+    @PutMapping("users/modifyUser")
+    public User updateUserDetails(@RequestHeader("Authorization") String jwtToken,@RequestBody User user) throws Exception {
+
+        User loginUser = userService.getUserByJWT(jwtToken);
+
+        return userService.updateUser(user,loginUser.getiUserId());
     }
 
     @DeleteMapping("users/deleteUser/{userId}")
@@ -48,8 +51,15 @@ public class UserController {
         return userService.searchUser(query);
     }
 
-    @PutMapping("users/follow/{userId1}/{userId2}")
-    public User followUserHandler(@PathVariable("userId1") Integer userId1 , @PathVariable("userId2") Integer userId2) throws Exception {
+    @PutMapping("users/follow/{userId2}")
+    public User followUserHandler(@RequestHeader("Authorization") String jwtToken, @PathVariable("userId2") Integer userId2) throws Exception {
+        Integer userId1 = userService.getUserByJWT(jwtToken).getiUserId();
         return userService.followUser(userId1,userId2);
+    }
+
+    @GetMapping("/api/users/profile")
+    public User getUserFromToken(@RequestHeader("Authorization") String jwtToken){
+        // System.out.println("getUserFromToken : JWT Token : "+jwtToken);
+        return userService.getUserByJWT(jwtToken);
     }
 }
