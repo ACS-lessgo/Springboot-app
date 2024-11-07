@@ -25,6 +25,9 @@ public class Post {
 
     private String videoUrl;
 
+    @OneToMany
+    private List<Comment> comments = new ArrayList<>();
+
     // Rel mapping for user to post
     // user creates many posts so rel mapping as many to one
     // user has multiple posts
@@ -42,7 +45,7 @@ public class Post {
     @OneToMany
     private List<User> likes = new ArrayList<>();
 
-    public Post(Integer id, String caption, String imageUrl, String videoUrl, User user, LocalDateTime createdAt, List<User> likes) {
+    public Post(Integer id, String caption, String imageUrl, String videoUrl, User user, LocalDateTime createdAt, List<User> likes,List<Comment> comments) {
         this.id = id;
         this.caption = caption;
         this.imageUrl = imageUrl;
@@ -50,6 +53,15 @@ public class Post {
         this.user = user;
         this.createdAt = createdAt;
         this.likes = likes;
+        this.comments = comments;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getCaption() {
